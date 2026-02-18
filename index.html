@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Family Nutrition Tracker</title>
+<title>Family Nutrition Weekly Tracker</title>
 
 <style>
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#667eea,#764ba2);
+  background:linear-gradient(135deg,#4e73df,#1cc88a);
 }
 
 nav{
@@ -18,15 +18,17 @@ nav{
 
 nav button{
   flex:1;
-  padding:15px;
+  padding:14px;
   border:none;
   background:transparent;
   color:white;
-  cursor:pointer;
   font-size:15px;
+  cursor:pointer;
 }
 
-nav button:hover{background:rgba(255,255,255,0.2);}
+nav button:hover{
+  background:rgba(255,255,255,0.2);
+}
 
 .container{padding:25px;}
 
@@ -38,54 +40,51 @@ nav button:hover{background:rgba(255,255,255,0.2);}
 }
 
 .task{
-  background:#f7f8ff;
+  background:#f4f7ff;
   padding:15px;
   margin-bottom:15px;
   border-radius:10px;
-  border-left:5px solid #667eea;
+  border-left:6px solid #4e73df;
 }
 
 .upload-box{
   margin-top:8px;
 }
 
-.preview{
-  margin-top:8px;
-}
-
 .preview img{
-  width:80px;
-  height:80px;
+  width:75px;
+  height:75px;
   object-fit:cover;
   border-radius:8px;
-  margin-right:6px;
+  margin-top:6px;
   border:2px solid #ddd;
 }
 
 .verify-btn{
-  margin-top:8px;
+  margin-top:6px;
   padding:5px 10px;
   background:#28a745;
-  border:none;
   color:white;
+  border:none;
   border-radius:6px;
   cursor:pointer;
 }
 
 .instructions{
-  background:#eef1ff;
+  background:#eef7f2;
   padding:15px;
   border-radius:10px;
   margin-top:20px;
+  font-size:14px;
 }
 
 .reset-btn{
+  margin-top:15px;
+  padding:8px 15px;
   background:#dc3545;
   color:white;
   border:none;
-  padding:8px 15px;
   border-radius:8px;
-  margin-top:15px;
   cursor:pointer;
 }
 </style>
@@ -113,61 +112,69 @@ const members={
 m49:{
 name:"Appala Naidu – BP & Stamina",
 tasks:[
-{ name:"Chia/Sabja (Soaked overnight – Morning)", freq:7 },
-{ name:"Flax Powder (Breakfast)", freq:7 },
-{ name:"Pumpkin Seeds (Evening)", freq:7 },
-{ name:"Eggs – 2 (Breakfast)", freq:7 },
-{ name:"Chicken – Lunch", freq:3 },
-{ name:"Fish – Lunch", freq:2 },
-{ name:"Mutton – Lunch", freq:1 }
+{ name:"Chia/Sabja (1 tbsp soaked overnight – Morning empty stomach)", freq:7 },
+{ name:"Flax Powder (1 tbsp mixed in breakfast)", freq:7 },
+{ name:"Pumpkin Seeds (1 tbsp evening snack)", freq:7 },
+{ name:"Eggs – 2 boiled (Breakfast)", freq:7 },
+{ name:"Chicken OR 50g Soya OR 1.5 cup Chana (Lunch)", freq:3 },
+{ name:"Fish OR 3 Eggs OR 50g Soya (Lunch)", freq:2 },
+{ name:"Mutton OR Paneer OR Extra Dal+Peanut mix", freq:1 }
 ],
-instructions:`Protein Target: 75–90g/day ✔ Achieved.<br>
-Walk 20 mins after dinner.`
+instructions:`
+Target Protein: 75–90g/day ✔ Achieved.<br>
+Reduce salt. Walk 20 mins after dinner. Drink 3L water.
+`
 },
 
 f40:{
 name:"SatyaVathi – Immunity & Strength",
 tasks:[
-{ name:"Sesame (Morning)", freq:4 },
-{ name:"Flax Powder (Breakfast)", freq:7 },
-{ name:"Pumpkin (Evening)", freq:7 },
-{ name:"Eggs – 2 (Breakfast)", freq:7 },
-{ name:"Chicken", freq:3 },
-{ name:"Fish", freq:2 },
-{ name:"Mutton", freq:1 }
+{ name:"Sesame (1 tbsp light roasted – Morning)", freq:4 },
+{ name:"Flax Powder (1 tbsp breakfast)", freq:7 },
+{ name:"Pumpkin Seeds (1 tbsp evening)", freq:7 },
+{ name:"Eggs – 2 boiled (Breakfast)", freq:7 },
+{ name:"Chicken OR 50g Soya OR Black Chana", freq:3 },
+{ name:"Fish OR 3 Eggs OR Sprouts", freq:2 },
+{ name:"Mutton OR Paneer OR Extra Dal", freq:1 }
 ],
-instructions:`Protein Target: 50–60g/day ✔ Achieved.<br>
-Do not skip meals.`
+instructions:`
+Target Protein: 50–60g/day ✔ Achieved.<br>
+Do not skip meals. Add 1 tsp ghee in lunch.
+`
 },
 
 m22:{
 name:"Vishnu Vardhan – Muscle Gain",
 tasks:[
-{ name:"Chia (Morning)", freq:7 },
-{ name:"Flax Powder (Breakfast)", freq:7 },
-{ name:"Pumpkin (Evening)", freq:7 },
-{ name:"Eggs – 2 (Breakfast)", freq:7 },
+{ name:"Chia (1 tbsp soaked – Morning)", freq:7 },
+{ name:"Flax Powder (1 tbsp breakfast)", freq:7 },
+{ name:"Pumpkin Seeds (1 tbsp evening)", freq:7 },
+{ name:"Eggs – 2 boiled (Breakfast)", freq:7 },
 { name:"Whey + Banana (Post Workout)", freq:4 },
-{ name:"Chicken – 200g Gym days", freq:4 },
-{ name:"Fish", freq:2 }
+{ name:"Chicken 200g OR 50g Soya OR Chana (Gym days)", freq:4 },
+{ name:"Fish OR 3 Eggs OR Soya", freq:2 }
 ],
-instructions:`Protein Target: 100–110g/day ✔ Achieved.<br>
-Drink 3L water daily.`
+instructions:`
+Target Protein: 100–110g/day ✔ Achieved.<br>
+Drink 3L water. Keep carbs sufficient for muscle.
+`
 },
 
 f19:{
 name:"Sharmila – Healthy Weight Gain",
 tasks:[
-{ name:"Sesame (Morning)", freq:7 },
-{ name:"Flax Powder (Breakfast)", freq:7 },
-{ name:"Pumpkin (Evening)", freq:7 },
-{ name:"Eggs – 2 (Breakfast)", freq:7 },
-{ name:"Chicken", freq:3 },
-{ name:"Fish", freq:2 },
-{ name:"Mutton", freq:1 }
+{ name:"Sesame (1 tbsp morning)", freq:7 },
+{ name:"Flax Powder (1 tbsp breakfast)", freq:7 },
+{ name:"Pumpkin Seeds (1 tbsp evening)", freq:7 },
+{ name:"Eggs – 2 boiled (Breakfast)", freq:7 },
+{ name:"Chicken OR 50g Soya OR Chana", freq:3 },
+{ name:"Fish OR Peanut Curry OR Soya", freq:2 },
+{ name:"Mutton OR Paneer OR Extra Dal", freq:1 }
 ],
-instructions:`Protein Target: 45–55g/day ✔ Achieved.<br>
-Eat every 3–4 hrs.`
+instructions:`
+Target Protein: 45–55g/day ✔ Achieved.<br>
+Eat every 3–4 hrs. Full rice portion allowed.
+`
 }
 
 };
@@ -203,10 +210,10 @@ div.innerHTML=html;
 card.appendChild(div);
 });
 
-const instructionDiv=document.createElement("div");
-instructionDiv.className="instructions";
-instructionDiv.innerHTML=member.instructions;
-card.appendChild(instructionDiv);
+const ins=document.createElement("div");
+ins.className="instructions";
+ins.innerHTML=member.instructions;
+card.appendChild(ins);
 
 const resetBtn=document.createElement("button");
 resetBtn.className="reset-btn";
@@ -227,10 +234,10 @@ preview.appendChild(img);
 
 function verify(id){
 const pass=prompt("Enter Admin Password");
-if(pass===adminPassword){
+if(pass==="1234"){
 document.getElementById("check_"+id).checked=true;
-} else {
-alert("Wrong Password");
+}else{
+alert("Wrong password");
 }
 }
 
