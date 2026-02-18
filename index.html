@@ -6,14 +6,16 @@
 
 <style>
 body {
-  font-family: Arial;
   margin: 0;
-  background: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #333;
 }
 
 nav {
   display: flex;
-  background: #222;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
 }
 
 nav button {
@@ -21,51 +23,90 @@ nav button {
   padding: 15px;
   border: none;
   color: white;
-  background: #222;
+  background: transparent;
+  font-size: 16px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 nav button:hover {
-  background: #444;
+  background: rgba(255,255,255,0.2);
 }
 
-.member {
-  display: none;
-  padding: 20px;
+.container {
+  padding: 30px;
 }
 
-.active {
-  display: block;
+.member-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 .task {
-  background: white;
+  background: #f9f9ff;
   padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border-left: 5px solid #667eea;
 }
 
 .task h4 {
   margin: 0 0 5px 0;
 }
 
-button.verify {
-  background: green;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
+input[type="file"] {
   margin-top: 5px;
 }
 
+button.verify {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 5px;
+  transition: 0.3s;
+}
+
+button.verify:hover {
+  background: #218838;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
 .reset-btn {
-  background: red;
+  background: #dc3545;
   color: white;
   padding: 8px 15px;
   border: none;
-  margin-top: 20px;
+  border-radius: 8px;
   cursor: pointer;
+}
+
+.reset-btn:hover {
+  background: #c82333;
+}
+
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -73,13 +114,15 @@ button.verify {
 <body>
 
 <nav>
-  <button onclick="showMember('m49')">49M</button>
-  <button onclick="showMember('f40')">40F</button>
-  <button onclick="showMember('m22')">22M</button>
-  <button onclick="showMember('f19')">19F</button>
+  <button onclick="showMember('m49')">Appala Naidu</button>
+  <button onclick="showMember('f40')">SatyaVathi</button>
+  <button onclick="showMember('m22')">Vishnu Vardhan</button>
+  <button onclick="showMember('f19')">Sharmila</button>
 </nav>
 
-<div id="content"></div>
+<div class="container">
+  <div id="content"></div>
+</div>
 
 <script>
 
@@ -88,7 +131,7 @@ const adminPassword = "1234"; // CHANGE THIS
 const members = {
 
 m49: {
-name: "49M - BP & Stamina",
+name: "Appala Naidu - BP & Stamina",
 tasks: [
 { id:"49_chia", name:"Chia/Sabja (Daily)", required:1 },
 { id:"49_flax", name:"Flax (Daily)", required:1 },
@@ -100,7 +143,7 @@ tasks: [
 ]},
 
 f40: {
-name: "40F - Immunity & Strength",
+name: "SatyaVathi - Immunity & Strength",
 tasks: [
 { id:"40_sesame", name:"Sesame (4/week)", required:4 },
 { id:"40_flax", name:"Flax (Daily)", required:1 },
@@ -112,7 +155,7 @@ tasks: [
 ]},
 
 m22: {
-name: "22M - Gym & Muscle",
+name: "Vishnu Vardhan - Gym & Muscle",
 tasks: [
 { id:"22_chia", name:"Chia/Sabja (Daily)", required:1 },
 { id:"22_flax", name:"Flax (Daily)", required:1 },
@@ -124,7 +167,7 @@ tasks: [
 ]},
 
 f19: {
-name: "19F - Weight Gain",
+name: "Sharmila - Weight Gain",
 tasks: [
 { id:"19_sesame", name:"Sesame (Daily)", required:1 },
 { id:"19_flax", name:"Flax (Daily)", required:1 },
@@ -142,18 +185,23 @@ function showMember(key){
   content.innerHTML = "";
   const member = members[key];
 
-  const container = document.createElement("div");
-  container.className = "member active";
+  const card = document.createElement("div");
+  card.className = "member-card";
 
   const title = document.createElement("h2");
   title.innerText = member.name;
-  container.appendChild(title);
+  card.appendChild(title);
+
+  let totalRequired = 0;
+  let totalDone = 0;
 
   member.tasks.forEach(task=>{
+    totalRequired += task.required;
+    let count = parseInt(localStorage.getItem(task.id) || 0);
+    totalDone += Math.min(count, task.required);
+
     const div = document.createElement("div");
     div.className="task";
-
-    const count = localStorage.getItem(task.id) || 0;
 
     div.innerHTML = `
       <h4>${task.name}</h4>
@@ -164,16 +212,24 @@ function showMember(key){
       <input type="checkbox" id="${task.id}_check" disabled>
     `;
 
-    container.appendChild(div);
+    card.appendChild(div);
   });
+
+  const progressPercent = Math.floor((totalDone/totalRequired)*100);
+
+  const progressBar = document.createElement("div");
+  progressBar.className="progress-bar";
+  progressBar.innerHTML=`<div class="progress-fill" style="width:${progressPercent}%"></div>`;
+  card.prepend(progressBar);
 
   const resetBtn = document.createElement("button");
   resetBtn.innerText="Reset Weekly Data";
   resetBtn.className="reset-btn";
   resetBtn.onclick=resetData;
-  container.appendChild(resetBtn);
 
-  content.appendChild(container);
+  card.appendChild(resetBtn);
+
+  content.appendChild(card);
 }
 
 function upload(id, required, filesCount){
@@ -181,10 +237,7 @@ function upload(id, required, filesCount){
   current += filesCount;
   localStorage.setItem(id, current);
   document.getElementById(id+"_count").innerText = current;
-
-  if(current >= required){
-    document.getElementById(id+"_check").disabled = false;
-  }
+  location.reload();
 }
 
 function verify(id){
