@@ -93,10 +93,6 @@ input[type="file"]{
   border-radius:8px;
 }
 
-.verify-btn:active{
-  opacity:0.8;
-}
-
 input[type="checkbox"]{
   transform:scale(1.4);
   margin-top:8px;
@@ -120,13 +116,6 @@ input[type="checkbox"]{
   font-size:14px;
   border-radius:10px;
 }
-
-@media(min-width:768px){
-  .container{
-    max-width:700px;
-    margin:auto;
-  }
-}
 </style>
 </head>
 
@@ -147,56 +136,76 @@ input[type="checkbox"]{
 
 const adminPassword="6061";
 
+const commonHealthTasks = [
+{ name:"Hydration – 3L Water (Daily)", freq:7 },
+{ name:"Sleep – 7+ Hours (Daily)", freq:7 },
+{ name:"Leafy Greens (Lunch/Dinner)", freq:4 }
+];
+
 const members={
 
 m49:{
 name:"Appala Naidu – BP & Stamina",
 tasks:[
 { name:"Chia/Sabja (1 tbsp soaked – Morning empty stomach)", freq:7 },
-{ name:"Flax (1 tbsp mixed in breakfast)", freq:7 },
-{ name:"Pumpkin Seeds (1 tbsp evening)", freq:7 },
+{ name:"Flax (1 tbsp breakfast)", freq:7 },
+{ name:"Pumpkin (1 tbsp evening)", freq:7 },
 { name:"Eggs – 2 boiled (Breakfast)", freq:7 },
-{ name:"Chicken OR 50g Soya OR 1.5 cup Chana (Lunch)", freq:3 },
-{ name:"Fish OR 3 Eggs OR Soya (Lunch)", freq:2 },
-{ name:"Mutton OR Paneer OR Extra Dal+Peanuts", freq:1 }
+{ name:"Chicken / Soya / Chana (Lunch)", freq:3 },
+{ name:"Fish / 3 Eggs / Soya", freq:2 },
+{ name:"Mutton / Paneer / Dal+Peanuts", freq:1 }
 ],
-instructions:`Base rice+dal+veg assumed daily.<br>
-Protein target 75–90g ✔.<br>
-Reduce salt. Walk 20 mins daily.`
+instructions:`
+Base rice + dal + vegetables assumed daily.<br>
+Protein Target: 75–90g ✔<br><br>
+• Walk 20 minutes daily<br>
+• Keep salt low<br>
+• Drink 3L water<br>
+• Sleep before 11 PM
+`
 },
 
 f40:{
 name:"SatyaVathi – Immunity & Strength",
 tasks:[
-{ name:"Sesame (1 tbsp light roasted – Morning)", freq:4 },
+{ name:"Sesame (1 tbsp morning)", freq:4 },
 { name:"Flax (1 tbsp breakfast)", freq:7 },
 { name:"Pumpkin (1 tbsp evening)", freq:7 },
-{ name:"Eggs – 2 boiled (Breakfast)", freq:7 },
-{ name:"Chicken OR Soya OR Black Chana", freq:3 },
-{ name:"Fish OR Sprouts OR 3 Eggs", freq:2 },
-{ name:"Mutton OR Paneer OR Extra Dal", freq:1 }
+{ name:"Eggs – 2 boiled", freq:7 },
+{ name:"Chicken / Soya / Chana", freq:3 },
+{ name:"Fish / Sprouts / 3 Eggs", freq:2 },
+{ name:"Mutton / Paneer / Dal", freq:1 }
 ],
-instructions:`Base meals assumed daily.<br>
-Protein 50–60g ✔.<br>
-Do not skip meals. Add 1 tsp ghee.`
+instructions:`
+Base meals assumed daily.<br>
+Protein 50–60g ✔<br><br>
+• Do not skip meals<br>
+• Add lemon to dal<br>
+• 1 tsp ghee allowed<br>
+• Sleep before 11 PM
+`
 },
 
 m22:{
 name:"Vishnu – Muscle Gain",
 tasks:[
 { name:"Chia/Sabja (1 tbsp soaked – Morning)", freq:7 },
-{ name:"Flax Powder (1 tbsp breakfast)", freq:7 },
-{ name:"Sunflower Seeds (1 tbsp lunch)", freq:7 },
-{ name:"Pumpkin Seeds (1 tbsp evening)", freq:7 },
-{ name:"Eggs – 2 boiled (Breakfast)", freq:7 },
+{ name:"Flax (1 tbsp breakfast)", freq:7 },
+{ name:"Sunflower (1 tbsp lunch)", freq:7 },
+{ name:"Pumpkin (1 tbsp evening)", freq:7 },
+{ name:"Eggs – 2 boiled", freq:7 },
 { name:"Whey + Banana (Post Workout)", freq:4 },
-{ name:"Chicken 200g OR 50g Soya OR 1.5 cup Chana", freq:4 },
-{ name:"Fish OR 3 Eggs OR Soya", freq:2 }
+{ name:"Chicken 200g / Soya / Chana", freq:4 },
+{ name:"Fish / 3 Eggs / Soya", freq:2 }
 ],
-instructions:`Base meals assumed daily.<br>
-Protein 100–110g ✔.<br>
-Pumpkin added for recovery.<br>
-Drink 3L water.`
+instructions:`
+Base meals assumed daily.<br>
+Protein 100–110g ✔<br><br>
+• 3L water minimum<br>
+• 7–8 hrs sleep<br>
+• Do not remove carbs<br>
+• Stretch after gym
+`
 },
 
 f19:{
@@ -205,14 +214,19 @@ tasks:[
 { name:"Sesame (1 tbsp morning)", freq:7 },
 { name:"Flax (1 tbsp breakfast)", freq:7 },
 { name:"Pumpkin (1 tbsp evening)", freq:7 },
-{ name:"Eggs – 2 boiled (Breakfast)", freq:7 },
-{ name:"Chicken OR Soya OR Chana", freq:3 },
-{ name:"Fish OR Peanut Curry OR Soya", freq:2 },
-{ name:"Mutton OR Paneer OR Extra Dal", freq:1 }
+{ name:"Eggs – 2 boiled", freq:7 },
+{ name:"Chicken / Soya / Chana", freq:3 },
+{ name:"Fish / Peanut Curry / Soya", freq:2 },
+{ name:"Mutton / Paneer / Dal", freq:1 }
 ],
-instructions:`Base meals assumed daily.<br>
-Protein 45–55g ✔.<br>
-Eat every 3–4 hrs.`
+instructions:`
+Base meals assumed daily.<br>
+Protein 45–55g ✔<br><br>
+• Eat every 3–4 hrs<br>
+• Full rice allowed<br>
+• Sleep 7–8 hrs<br>
+• No meal skipping
+`
 }
 
 };
@@ -226,7 +240,7 @@ const card=document.createElement("div");
 card.className="card";
 card.innerHTML=`<h2>${member.name}</h2>`;
 
-member.tasks.forEach((task,index)=>{
+[...member.tasks, ...commonHealthTasks].forEach((task,index)=>{
 const div=document.createElement("div");
 div.className="task";
 
