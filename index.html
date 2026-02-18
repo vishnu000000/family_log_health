@@ -2,14 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Family Nutrition Weekly Tracker</title>
+<title>Family Nutrition Tracker</title>
 
 <style>
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
   background:linear-gradient(135deg,#667eea,#764ba2);
-  color:#333;
 }
 
 nav{
@@ -23,10 +22,10 @@ nav button{
   border:none;
   background:transparent;
   color:white;
-  font-size:15px;
   cursor:pointer;
-  transition:0.3s;
+  font-size:15px;
 }
+
 nav button:hover{background:rgba(255,255,255,0.2);}
 
 .container{padding:25px;}
@@ -36,7 +35,6 @@ nav button:hover{background:rgba(255,255,255,0.2);}
   border-radius:15px;
   padding:25px;
   box-shadow:0 15px 30px rgba(0,0,0,0.2);
-  animation:fade 0.3s ease-in-out;
 }
 
 .task{
@@ -47,13 +45,31 @@ nav button:hover{background:rgba(255,255,255,0.2);}
   border-left:5px solid #667eea;
 }
 
-.checkbox-group{
-  margin-top:10px;
+.upload-box{
+  margin-top:8px;
 }
 
-.checkbox-group input{
+.preview{
+  margin-top:8px;
+}
+
+.preview img{
+  width:80px;
+  height:80px;
+  object-fit:cover;
+  border-radius:8px;
   margin-right:6px;
-  transform:scale(1.2);
+  border:2px solid #ddd;
+}
+
+.verify-btn{
+  margin-top:8px;
+  padding:5px 10px;
+  background:#28a745;
+  border:none;
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 .instructions{
@@ -69,13 +85,8 @@ nav button:hover{background:rgba(255,255,255,0.2);}
   border:none;
   padding:8px 15px;
   border-radius:8px;
-  cursor:pointer;
   margin-top:15px;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+  cursor:pointer;
 }
 </style>
 </head>
@@ -102,52 +113,46 @@ const members={
 m49:{
 name:"Appala Naidu – BP & Stamina",
 tasks:[
-{ name:"Chia/Sabja (Soaked overnight – Morning empty stomach)", freq:7 },
-{ name:"Flax Powder (Mix in breakfast curd)", freq:7 },
-{ name:"Pumpkin Seeds (Evening snack)", freq:7 },
-{ name:"Eggs – 2 Boiled (Breakfast)", freq:7 },
-{ name:"Chicken – 120g Lunch", freq:3 },
-{ name:"Fish – 120g Lunch", freq:2 },
-{ name:"Mutton – Light portion Lunch", freq:1 }
+{ name:"Chia/Sabja (Soaked overnight – Morning)", freq:7 },
+{ name:"Flax Powder (Breakfast)", freq:7 },
+{ name:"Pumpkin Seeds (Evening)", freq:7 },
+{ name:"Eggs – 2 (Breakfast)", freq:7 },
+{ name:"Chicken – Lunch", freq:3 },
+{ name:"Fish – Lunch", freq:2 },
+{ name:"Mutton – Lunch", freq:1 }
 ],
-instructions:`
-Protein Target: 75–90g/day ✔ Achieved.<br>
-Keep salt moderate. Walk after dinner 20 mins.
-`
+instructions:`Protein Target: 75–90g/day ✔ Achieved.<br>
+Walk 20 mins after dinner.`
 },
 
 f40:{
 name:"SatyaVathi – Immunity & Strength",
 tasks:[
-{ name:"Sesame (Light roasted – Morning)", freq:4 },
+{ name:"Sesame (Morning)", freq:4 },
 { name:"Flax Powder (Breakfast)", freq:7 },
-{ name:"Pumpkin Seeds (Evening)", freq:7 },
+{ name:"Pumpkin (Evening)", freq:7 },
 { name:"Eggs – 2 (Breakfast)", freq:7 },
-{ name:"Chicken – 100g", freq:3 },
-{ name:"Fish – 120g", freq:2 },
-{ name:"Mutton – Small portion", freq:1 }
+{ name:"Chicken", freq:3 },
+{ name:"Fish", freq:2 },
+{ name:"Mutton", freq:1 }
 ],
-instructions:`
-Protein Target: 50–60g/day ✔ Achieved.<br>
-Add 1 tsp ghee in lunch. Do not skip meals.
-`
+instructions:`Protein Target: 50–60g/day ✔ Achieved.<br>
+Do not skip meals.`
 },
 
 m22:{
 name:"Vishnu Vardhan – Muscle Gain",
 tasks:[
-{ name:"Chia (Soaked – Morning)", freq:7 },
+{ name:"Chia (Morning)", freq:7 },
 { name:"Flax Powder (Breakfast)", freq:7 },
-{ name:"Pumpkin Seeds (Evening)", freq:7 },
+{ name:"Pumpkin (Evening)", freq:7 },
 { name:"Eggs – 2 (Breakfast)", freq:7 },
 { name:"Whey + Banana (Post Workout)", freq:4 },
-{ name:"Chicken – 200g (Gym days), 150g normal", freq:4 },
-{ name:"Fish – 150g", freq:2 }
+{ name:"Chicken – 200g Gym days", freq:4 },
+{ name:"Fish", freq:2 }
 ],
-instructions:`
-Protein Target: 100–110g/day ✔ Achieved.<br>
-Drink 3L water. Keep carbs sufficient.
-`
+instructions:`Protein Target: 100–110g/day ✔ Achieved.<br>
+Drink 3L water daily.`
 },
 
 f19:{
@@ -155,20 +160,17 @@ name:"Sharmila – Healthy Weight Gain",
 tasks:[
 { name:"Sesame (Morning)", freq:7 },
 { name:"Flax Powder (Breakfast)", freq:7 },
-{ name:"Pumpkin Seeds (Evening)", freq:7 },
+{ name:"Pumpkin (Evening)", freq:7 },
 { name:"Eggs – 2 (Breakfast)", freq:7 },
-{ name:"Chicken – 120g", freq:3 },
-{ name:"Fish – 120g", freq:2 },
-{ name:"Mutton – Small portion", freq:1 }
+{ name:"Chicken", freq:3 },
+{ name:"Fish", freq:2 },
+{ name:"Mutton", freq:1 }
 ],
-instructions:`
-Protein Target: 45–55g/day ✔ Achieved.<br>
-Eat full meals. Sleep 7–8 hrs daily.
-`
+instructions:`Protein Target: 45–55g/day ✔ Achieved.<br>
+Eat every 3–4 hrs.`
 }
 
 };
-
 
 function showMember(key){
 const content=document.getElementById("content");
@@ -177,23 +179,27 @@ const member=members[key];
 
 const card=document.createElement("div");
 card.className="card";
-
 card.innerHTML=`<h2>${member.name}</h2>`;
 
-member.tasks.forEach(task=>{
+member.tasks.forEach((task,index)=>{
 const div=document.createElement("div");
 div.className="task";
 
-let checkboxes="";
+let html=`<h4>${task.name} (${task.freq}/week)</h4>`;
+
 for(let i=0;i<task.freq;i++){
-checkboxes+=`<input type="checkbox" onclick="verify(this,'${task.id}_${i}')">`;
+let id=`${key}_${index}_${i}`;
+html+=`
+<div class="upload-box">
+<input type="file" accept="image/*" onchange="previewImage(event,'${id}')">
+<div class="preview" id="preview_${id}"></div>
+<button class="verify-btn" onclick="verify('${id}')">Verify</button>
+<input type="checkbox" id="check_${id}" disabled>
+</div>
+`;
 }
 
-div.innerHTML=`
-<h4>${task.name} (${task.freq}/week)</h4>
-<div class="checkbox-group">${checkboxes}</div>
-`;
-
+div.innerHTML=html;
 card.appendChild(div);
 });
 
@@ -204,19 +210,27 @@ card.appendChild(instructionDiv);
 
 const resetBtn=document.createElement("button");
 resetBtn.className="reset-btn";
-resetBtn.innerText="Reset Weekly Checks";
+resetBtn.innerText="Reset Weekly";
 resetBtn.onclick=()=>location.reload();
 card.appendChild(resetBtn);
 
 content.appendChild(card);
 }
 
-function verify(box,id){
-if(!box.checked)return;
+function previewImage(event,id){
+const preview=document.getElementById("preview_"+id);
+preview.innerHTML="";
+const img=document.createElement("img");
+img.src=URL.createObjectURL(event.target.files[0]);
+preview.appendChild(img);
+}
+
+function verify(id){
 const pass=prompt("Enter Admin Password");
-if(pass!==adminPassword){
-alert("Wrong password");
-box.checked=false;
+if(pass===adminPassword){
+document.getElementById("check_"+id).checked=true;
+} else {
+alert("Wrong Password");
 }
 }
 
