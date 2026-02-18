@@ -2,111 +2,80 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Family Nutrition Tracker</title>
+<title>Family Nutrition Weekly Tracker</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #333;
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:#333;
 }
 
-nav {
-  display: flex;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(10px);
+nav{
+  display:flex;
+  background:rgba(0,0,0,0.3);
 }
 
-nav button {
-  flex: 1;
-  padding: 15px;
-  border: none;
-  color: white;
-  background: transparent;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+nav button{
+  flex:1;
+  padding:15px;
+  border:none;
+  background:transparent;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+nav button:hover{background:rgba(255,255,255,0.2);}
+
+.container{padding:25px;}
+
+.card{
+  background:white;
+  border-radius:15px;
+  padding:25px;
+  box-shadow:0 15px 30px rgba(0,0,0,0.2);
+  animation:fade 0.3s ease-in-out;
 }
 
-nav button:hover {
-  background: rgba(255,255,255,0.2);
+.task{
+  background:#f7f8ff;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border-left:5px solid #667eea;
 }
 
-.container {
-  padding: 30px;
+.checkbox-group{
+  margin-top:10px;
 }
 
-.member-card {
-  background: white;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-  animation: fadeIn 0.4s ease-in-out;
+.checkbox-group input{
+  margin-right:6px;
+  transform:scale(1.2);
 }
 
-.task {
-  background: #f9f9ff;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  border-left: 5px solid #667eea;
+.instructions{
+  background:#eef1ff;
+  padding:15px;
+  border-radius:10px;
+  margin-top:20px;
 }
 
-.task h4 {
-  margin: 0 0 5px 0;
+.reset-btn{
+  background:#dc3545;
+  color:white;
+  border:none;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:15px;
 }
 
-input[type="file"] {
-  margin-top: 5px;
-}
-
-button.verify {
-  background: #28a745;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 5px;
-  transition: 0.3s;
-}
-
-button.verify:hover {
-  background: #218838;
-}
-
-.progress-bar {
-  height: 10px;
-  background: #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  width: 0%;
-  transition: width 0.5s ease;
-}
-
-.reset-btn {
-  background: #dc3545;
-  color: white;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.reset-btn:hover {
-  background: #c82333;
-}
-
-@keyframes fadeIn {
-  from {opacity:0; transform:translateY(10px);}
-  to {opacity:1; transform:translateY(0);}
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
 }
 </style>
 </head>
@@ -114,149 +83,165 @@ button.verify:hover {
 <body>
 
 <nav>
-  <button onclick="showMember('m49')">Appala Naidu</button>
-  <button onclick="showMember('f40')">SatyaVathi</button>
-  <button onclick="showMember('m22')">Vishnu Vardhan</button>
-  <button onclick="showMember('f19')">Sharmila</button>
+<button onclick="showMember('m49')">Appala Naidu</button>
+<button onclick="showMember('f40')">SatyaVathi</button>
+<button onclick="showMember('m22')">Vishnu Vardhan</button>
+<button onclick="showMember('f19')">Sharmila</button>
 </nav>
 
 <div class="container">
-  <div id="content"></div>
+<div id="content"></div>
 </div>
 
 <script>
 
-const adminPassword = "1234"; // CHANGE THIS
+const adminPassword="1234";
 
-const members = {
+const members={
 
-m49: {
-name: "Appala Naidu - BP & Stamina",
-tasks: [
-{ id:"49_chia", name:"Chia/Sabja (Daily)", required:1 },
-{ id:"49_flax", name:"Flax (Daily)", required:1 },
-{ id:"49_pumpkin", name:"Pumpkin Seeds (Daily)", required:1 },
-{ id:"49_egg", name:"Egg (Daily)", required:1 },
-{ id:"49_chicken", name:"Chicken (3/week)", required:3 },
-{ id:"49_fish", name:"Fish (2/week)", required:2 },
-{ id:"49_mutton", name:"Mutton (1/week)", required:1 }
-]},
+m49:{
+name:"Appala Naidu – BP & Stamina",
+tasks:[
+{ id:"49_chia", name:"Chia/Sabja (Morning Empty Stomach)", freq:7 },
+{ id:"49_flax", name:"Flax (With Breakfast)", freq:7 },
+{ id:"49_pumpkin", name:"Pumpkin Seeds (Evening)", freq:7 },
+{ id:"49_egg", name:"Egg (Breakfast)", freq:7 },
+{ id:"49_chicken", name:"Chicken (Lunch)", freq:3 },
+{ id:"49_fish", name:"Fish (Lunch)", freq:2 },
+{ id:"49_mutton", name:"Mutton (Lunch)", freq:1 }
+],
+instructions:`
+<b>Daily Timing:</b><br>
+Morning: Soaked chia/sabja.<br>
+Breakfast: Egg + flax mixed in food.<br>
+Lunch: Rice + dal + green veg + chicken/fish as per week plan.<br>
+Evening: Pumpkin seeds.<br>
+Dinner: Light meal.<br><br>
+<b>Suggestions:</b><br>
+Reduce salt. Walk 20 min after dinner. Drink 3L water daily.
+`
+},
 
-f40: {
-name: "SatyaVathi - Immunity & Strength",
-tasks: [
-{ id:"40_sesame", name:"Sesame (4/week)", required:4 },
-{ id:"40_flax", name:"Flax (Daily)", required:1 },
-{ id:"40_pumpkin", name:"Pumpkin (Daily)", required:1 },
-{ id:"40_egg", name:"Egg (Daily)", required:1 },
-{ id:"40_chicken", name:"Chicken (3/week)", required:3 },
-{ id:"40_fish", name:"Fish (2/week)", required:2 },
-{ id:"40_mutton", name:"Mutton (1/week)", required:1 }
-]},
+f40:{
+name:"SatyaVathi – Immunity & Strength",
+tasks:[
+{ id:"40_sesame", name:"Sesame (Morning)", freq:4 },
+{ id:"40_flax", name:"Flax (Breakfast)", freq:7 },
+{ id:"40_pumpkin", name:"Pumpkin (Evening)", freq:7 },
+{ id:"40_egg", name:"Egg (Breakfast)", freq:7 },
+{ id:"40_chicken", name:"Chicken", freq:3 },
+{ id:"40_fish", name:"Fish", freq:2 },
+{ id:"40_mutton", name:"Mutton", freq:1 }
+],
+instructions:`
+<b>Daily Timing:</b><br>
+Morning: Sesame (light roasted).<br>
+Breakfast: Egg + flax.<br>
+Lunch: Rice + dal + leafy veg.<br>
+Evening: Pumpkin seeds.<br><br>
+<b>Suggestions:</b><br>
+Do not skip meals. Add 1 tsp ghee in lunch. Sleep before 11 PM.
+`
+},
 
-m22: {
-name: "Vishnu Vardhan - Gym & Muscle",
-tasks: [
-{ id:"22_chia", name:"Chia/Sabja (Daily)", required:1 },
-{ id:"22_flax", name:"Flax (Daily)", required:1 },
-{ id:"22_pumpkin", name:"Pumpkin (Daily)", required:1 },
-{ id:"22_egg", name:"Egg (Daily)", required:1 },
-{ id:"22_whey", name:"Whey (3/week)", required:3 },
-{ id:"22_chicken", name:"Chicken (4/week)", required:4 },
-{ id:"22_fish", name:"Fish (2/week)", required:2 }
-]},
+m22:{
+name:"Vishnu Vardhan – Gym & Muscle",
+tasks:[
+{ id:"22_chia", name:"Chia/Sabja (Morning)", freq:7 },
+{ id:"22_flax", name:"Flax (Breakfast)", freq:7 },
+{ id:"22_pumpkin", name:"Pumpkin (Evening)", freq:7 },
+{ id:"22_egg", name:"Egg (Breakfast)", freq:7 },
+{ id:"22_whey", name:"Whey (Post Workout)", freq:4 },
+{ id:"22_chicken", name:"Chicken", freq:4 },
+{ id:"22_fish", name:"Fish", freq:2 }
+],
+instructions:`
+<b>Daily Timing:</b><br>
+Morning: Chia/sabja soaked.<br>
+Breakfast: Egg + flax.<br>
+Post Gym: Whey + banana (only gym days).<br>
+Lunch: Chicken/fish.<br>
+Evening: Pumpkin seeds.<br><br>
+<b>Suggestions:</b><br>
+Drink 3L water. Do not skip carbs. Whey only on workout days.
+`
+},
 
-f19: {
-name: "Sharmila - Weight Gain",
-tasks: [
-{ id:"19_sesame", name:"Sesame (Daily)", required:1 },
-{ id:"19_flax", name:"Flax (Daily)", required:1 },
-{ id:"19_pumpkin", name:"Pumpkin (Daily)", required:1 },
-{ id:"19_egg", name:"Egg (Daily)", required:1 },
-{ id:"19_chicken", name:"Chicken (3/week)", required:3 },
-{ id:"19_fish", name:"Fish (2/week)", required:2 },
-{ id:"19_mutton", name:"Mutton (1/week)", required:1 }
-]}
+f19:{
+name:"Sharmila – Weight Gain",
+tasks:[
+{ id:"19_sesame", name:"Sesame (Morning)", freq:7 },
+{ id:"19_flax", name:"Flax (Breakfast)", freq:7 },
+{ id:"19_pumpkin", name:"Pumpkin (Evening)", freq:7 },
+{ id:"19_egg", name:"Egg (Breakfast)", freq:7 },
+{ id:"19_chicken", name:"Chicken", freq:3 },
+{ id:"19_fish", name:"Fish", freq:2 },
+{ id:"19_mutton", name:"Mutton", freq:1 }
+],
+instructions:`
+<b>Daily Timing:</b><br>
+Morning: Sesame.<br>
+Breakfast: Egg + flax.<br>
+Lunch: Full rice portion + dal + chicken/fish.<br>
+Evening: Pumpkin seeds.<br><br>
+<b>Suggestions:</b><br>
+Never skip meals. Eat every 3-4 hours. Sleep 7-8 hours.
+`
+}
 
 };
 
 function showMember(key){
-  const content = document.getElementById("content");
-  content.innerHTML = "";
-  const member = members[key];
+const content=document.getElementById("content");
+content.innerHTML="";
+const member=members[key];
 
-  const card = document.createElement("div");
-  card.className = "member-card";
+const card=document.createElement("div");
+card.className="card";
 
-  const title = document.createElement("h2");
-  title.innerText = member.name;
-  card.appendChild(title);
+card.innerHTML=`<h2>${member.name}</h2>`;
 
-  let totalRequired = 0;
-  let totalDone = 0;
+member.tasks.forEach(task=>{
+const div=document.createElement("div");
+div.className="task";
 
-  member.tasks.forEach(task=>{
-    totalRequired += task.required;
-    let count = parseInt(localStorage.getItem(task.id) || 0);
-    totalDone += Math.min(count, task.required);
-
-    const div = document.createElement("div");
-    div.className="task";
-
-    div.innerHTML = `
-      <h4>${task.name}</h4>
-      <p>Uploaded: <span id="${task.id}_count">${count}</span> / ${task.required}</p>
-      <input type="file" multiple onchange="upload('${task.id}', ${task.required}, this.files.length)">
-      <br>
-      <button class="verify" onclick="verify('${task.id}')">Verify</button>
-      <input type="checkbox" id="${task.id}_check" disabled>
-    `;
-
-    card.appendChild(div);
-  });
-
-  const progressPercent = Math.floor((totalDone/totalRequired)*100);
-
-  const progressBar = document.createElement("div");
-  progressBar.className="progress-bar";
-  progressBar.innerHTML=`<div class="progress-fill" style="width:${progressPercent}%"></div>`;
-  card.prepend(progressBar);
-
-  const resetBtn = document.createElement("button");
-  resetBtn.innerText="Reset Weekly Data";
-  resetBtn.className="reset-btn";
-  resetBtn.onclick=resetData;
-
-  card.appendChild(resetBtn);
-
-  content.appendChild(card);
+let checkboxes="";
+for(let i=0;i<task.freq;i++){
+checkboxes+=`<input type="checkbox" onclick="verify(this,'${task.id}_${i}')">`;
 }
 
-function upload(id, required, filesCount){
-  let current = parseInt(localStorage.getItem(id) || 0);
-  current += filesCount;
-  localStorage.setItem(id, current);
-  document.getElementById(id+"_count").innerText = current;
-  location.reload();
+div.innerHTML=`
+<h4>${task.name} (${task.freq}/week)</h4>
+<div class="checkbox-group">${checkboxes}</div>
+`;
+
+card.appendChild(div);
+});
+
+const instructionDiv=document.createElement("div");
+instructionDiv.className="instructions";
+instructionDiv.innerHTML=member.instructions;
+card.appendChild(instructionDiv);
+
+const resetBtn=document.createElement("button");
+resetBtn.className="reset-btn";
+resetBtn.innerText="Reset Weekly Checks";
+resetBtn.onclick=()=>location.reload();
+card.appendChild(resetBtn);
+
+content.appendChild(card);
 }
 
-function verify(id){
-  const pass = prompt("Enter Admin Password");
-  if(pass === adminPassword){
-    document.getElementById(id+"_check").checked = true;
-  } else {
-    alert("Wrong password");
-  }
+function verify(box,id){
+if(!box.checked)return;
+const pass=prompt("Enter Admin Password");
+if(pass!==adminPassword){
+alert("Wrong password");
+box.checked=false;
+}
 }
 
-function resetData(){
-  if(confirm("Reset all weekly data?")){
-    localStorage.clear();
-    location.reload();
-  }
-}
-
-showMember('m49');
+showMember("m49");
 
 </script>
 
